@@ -1,24 +1,41 @@
 package main
 
 import (
-	"args/parser"
+	"fmt"
 	"os"
 )
 
 func main() {
-	parser := args.New()
+	fmt.Println(os.Args[1:])
+	parser := New()
 
-	dock := parser.Command("dock")
+	req := parser.Command(Command{
+		Name: "req",
+	})
 
-	req := parser.Command("req")
+	req.Command(Command{
+		Name: "new",
+	})
 
-	req.Command("new")
-	req.Command("run")
+	req.Positional(Positional{
+		Name: "request name",
+	})
 
-	dock.Command("init")
-	dock.Command("use")
-	dock.Command("list")
-	dock.Command("status")
+	dock := parser.Command(Command{
+		Name: "dock",
+	})
 
-	parser.Parse(os.Args)
+	run := dock.Command(Command{
+		Name: "run",
+	})
+
+	run.Flag(Flag{
+		Name: "output",
+		Abbr: "o",
+	})
+
+	parser.Parse(os.Args[1:])
+	fmt.Println()
+	fmt.Println("Print")
+	parser.Print(0)
 }
