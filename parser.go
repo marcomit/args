@@ -1,4 +1,4 @@
-package main
+package args
 
 import (
 	"errors"
@@ -304,4 +304,3 @@ func (r *Result) Flag(name string) bool {
 	}
 	return val
 }
-
